@@ -1,0 +1,7 @@
+{
+  "name": "osunhive.name.ng Multimodal Studio",
+  "description": "A cutting-edge AI creation platform by osunhive.name.ng, powered by Veo 3.1 and Gemini. Developed by Olajide Sherif Oyinlola.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
