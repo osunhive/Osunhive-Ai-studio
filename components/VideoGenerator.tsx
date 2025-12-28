@@ -520,13 +520,13 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
                         <input value={speaker1.name} onChange={e => setSpeaker1({...speaker1, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-white" placeholder="S1 Name" />
-                        <select value={speaker1.voice} onChange={e => setSpeaker1({...speaker1, voice: e.target.voice})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
+                        <select value={speaker1.voice} onChange={e => setSpeaker1({...speaker1, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
                           {VOICES.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}
                         </select>
                       </div>
                       <div className="space-y-1">
                         <input value={speaker2.name} onChange={e => setSpeaker2({...speaker2, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-white" placeholder="S2 Name" />
-                        <select value={speaker2.voice} onChange={e => setSpeaker2({...speaker2, voice: e.target.voice})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
+                        <select value={speaker2.voice} onChange={e => setSpeaker2({...speaker2, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
                           {VOICES.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}
                         </select>
                       </div>
