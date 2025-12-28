@@ -13,8 +13,8 @@ declare global {
   }
 
   interface Window {
-    // Fix: Added readonly modifier to match the pre-existing global declaration of aistudio and avoid identical modifier error
-    readonly aistudio: AIStudio;
+    // Fix: Removed readonly modifier to match the pre-existing global declaration of aistudio and avoid identical modifier error
+    aistudio: AIStudio;
   }
 }
 

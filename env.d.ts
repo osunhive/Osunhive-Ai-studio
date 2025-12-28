@@ -1,5 +1,5 @@
 
-// Fix: Using namespace extension for NodeJS to avoid 'Cannot redeclare block-scoped variable' error for 'process'
+// Augment the existing NodeJS namespace provided by @types/node
 declare namespace NodeJS {
   interface ProcessEnv {
     API_KEY: string;
