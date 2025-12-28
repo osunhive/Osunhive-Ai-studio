@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { GoogleGenAI, Modality, LiveServerMessage } from "@google/genai";
 import { AspectRatio, Resolution, GenerationStatus, TaskMode, ImageSize } from '../types';
@@ -394,11 +395,15 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
     if (uploadedImage) {
       parts.push({ inlineData: { data: await fileToBase64(uploadedImage), mimeType: uploadedImage.type } });
     }
+    // Recommendation: Explicitly set thinkingBudget when provided to ensure output tokens are reserved.
     const config: any = {
       model: modelName, contents: { parts },
-      config: { systemInstruction, imageConfig: { aspectRatio, imageSize: modelName.includes('pro') ? imageSize : undefined } }
+      config: { 
+        systemInstruction, 
+        imageConfig: { aspectRatio, imageSize: modelName.includes('pro') ? imageSize : undefined },
+        thinkingConfig: { thinkingBudget: thinkingBudget || 0 }
+      }
     };
-    if (thinkingBudget > 0) config.config.thinkingConfig = { thinkingBudget };
     const response = await ai.models.generateContent(config);
     for (const part of response.candidates[0].content.parts) {
       if (part.inlineData) setGeneratedImageUrl(`data:image/png;base64,${part.inlineData.data}`);
@@ -411,8 +416,16 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
     if (uploadedImage) {
       parts.push({ inlineData: { data: await fileToBase64(uploadedImage), mimeType: uploadedImage.type } });
     }
-    const config: any = { model: modelName, contents: { parts }, config: { maxOutputTokens, systemInstruction } };
-    if (thinkingBudget > 0) config.config.thinkingConfig = { thinkingBudget };
+    // If you need to set maxOutputTokens, you must set a smaller thinkingBudget to reserve tokens for the final output.
+    const config: any = { 
+      model: modelName, 
+      contents: { parts }, 
+      config: { 
+        maxOutputTokens, 
+        systemInstruction,
+        thinkingConfig: { thinkingBudget: thinkingBudget || 0 }
+      } 
+    };
     const response = await ai.models.generateContent(config);
     setTextResult(response.text || "No response received.");
     setStatus({ isGenerating: false, message: "", progress: 100 });
@@ -423,6 +436,7 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
     if (uploadedImage) {
       parts.push({ inlineData: { data: await fileToBase64(uploadedImage), mimeType: uploadedImage.type } });
     }
+    // For coding tasks, we use a balanced configuration between thinking and generation.
     const config: any = { 
       model: modelName, 
       contents: { parts }, 
@@ -520,13 +534,13 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
                         <input value={speaker1.name} onChange={e => setSpeaker1({...speaker1, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-white" placeholder="S1 Name" />
-                        <select value={speaker1.voice} onChange={e => setSpeaker1({...speaker1, voice: e.target.voice})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
+                        <select value={speaker1.voice} onChange={e => setSpeaker1({...speaker1, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
                           {VOICES.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}
                         </select>
                       </div>
                       <div className="space-y-1">
                         <input value={speaker2.name} onChange={e => setSpeaker2({...speaker2, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-white" placeholder="S2 Name" />
-                        <select value={speaker2.voice} onChange={e => setSpeaker2({...speaker2, voice: e.target.voice})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
+                        <select value={speaker2.voice} onChange={e => setSpeaker2({...speaker2, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
                           {VOICES.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}
                         </select>
                       </div>
