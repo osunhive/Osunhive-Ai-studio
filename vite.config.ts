@@ -4,12 +4,15 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
-    // This allows your code to use process.env.API_KEY 
-    // It will pull from the environment variables you set in Netlify
+    // Vercel will inject process.env.API_KEY during the build process
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
   },
   build: {
     target: 'esnext',
-    outDir: 'dist'
+    outDir: 'dist',
+    sourcemap: false
+  },
+  server: {
+    port: 3000
   }
 });
