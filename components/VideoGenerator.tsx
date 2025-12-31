@@ -250,7 +250,7 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
     setPrompt(DEFAULT_PROMPTS[taskMode]);
     setIsCustomModel(false);
     if (taskMode === 'VIDEO') setSelectedModel('veo-3.1-fast-generate-preview');
-    else if (taskMode === 'IMAGE') setSelectedModel('gemini-2.5-flash-image');
+    else if (taskMode === 'IMAGE') setSelectedModel('pollinations-free');
     else if (taskMode === 'SPEECH') setSelectedModel('gemini-2.5-flash-preview-tts');
     else if (taskMode === 'LIVE') setSelectedModel('gemini-2.5-flash-native-audio-preview-09-2025');
     else if (taskMode === 'CODE') setSelectedModel('gemini-3-pro-preview');
