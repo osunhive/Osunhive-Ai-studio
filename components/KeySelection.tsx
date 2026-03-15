@@ -1,11 +1,10 @@
-
-import React from 'react';
+import React from "react";
 
 const OsunhiveLogo = () => (
-  <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 5L90 27.5V72.5L50 95L10 72.5V27.5L50 5Z" fill="#F97316" />
-    <path d="M50 35L70 50L50 65L30 50L50 35Z" fill="white" />
-    <path d="M50 50L70 65L50 80L30 65L50 50Z" fill="white" fillOpacity="0.8" />
+  <svg width="70" height="70" viewBox="0 0 100 100" fill="none">
+    <path d="M50 5L90 27.5V72.5L50 95L10 72.5V27.5L50 5Z" fill="#F97316"/>
+    <path d="M50 35L70 50L50 65L30 50L50 35Z" fill="white"/>
+    <path d="M50 50L70 65L50 80L30 65L50 50Z" fill="white" fillOpacity="0.8"/>
   </svg>
 );
 
@@ -14,75 +13,127 @@ interface Props {
 }
 
 const KeySelection: React.FC<Props> = ({ onSelected }) => {
-  const handleOpenKeySelection = async () => {
-    try {
-      await window.aistudio.openSelectKey();
-      onSelected();
-    } catch (error) {
-      console.error("Failed to open key selection:", error);
-    }
+
+  const openWebsite = () => {
+    window.open("https://www.osunhive.name.ng","_blank");
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center bg-gray-950 p-6">
-      <div className="max-w-md w-full glass-panel rounded-3xl p-10 text-center border-orange-500/30 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
-        
-        <div className="flex justify-center mb-6">
-          <OsunhiveLogo />
-        </div>
-        
-        <h1 className="text-3xl font-bold font-display mb-4 text-white">osunhive.name.ng</h1>
-        <p className="text-gray-400 mb-8 text-sm leading-relaxed px-2">
-          Multimodal Creative Studio. Access free-tier Gemini models or connect a paid key for Veo Video Generation.
-        </p>
-        
-        <div className="space-y-4">
-          <button
-            onClick={handleOpenKeySelection}
-            className="w-full py-4 bg-orange-600 hover:bg-orange-500 transition-all rounded-xl font-black uppercase text-xs tracking-widest text-white shadow-lg shadow-orange-500/20"
-          >
-            Support Osunhive (Donate)
-          </button>
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-6 text-white">
 
-          <div className="text-[9px] text-gray-500 mt-2 px-2 font-mono uppercase tracking-tighter">
-            Osunhive is community-powered. Support development and receive updates, perks, and announcements via our Telegram channel.
-            Note: Pro models (Veo) require an API key from a paid GCP project. 
-            <a href="https://www.osunhive.name.ng" target="_blank" rel="noreferrer" className="text-orange-400 hover:underline ml-1">
-              Get Paid API Key 
-            </a>.
-          </div>
-          
+      <div className="max-w-xl w-full bg-gray-900 rounded-3xl p-10 shadow-2xl border border-orange-500/20 text-center">
+
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <OsunhiveLogo/>
+        </div>
+
+        {/* Title */}
+        <h1 className="text-4xl font-bold mb-4">
+          Osunhive AI
+        </h1>
+
+        {/* Subtitle */}
+        <p className="text-gray-400 mb-8 text-sm leading-relaxed">
+          AI Creative Studio built for modern creators.  
+          Generate viral content ideas, scripts and automation tools
+          for YouTube, TikTok and Facebook.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="space-y-4">
+
           <button
             onClick={onSelected}
-            className="w-full py-4 bg-white/5 hover:bg-white/10 transition-all rounded-xl font-black uppercase text-xs tracking-widest text-gray-300 border border-white/5"
+            className="w-full py-4 bg-orange-600 hover:bg-orange-500 transition rounded-xl font-bold uppercase text-sm tracking-widest shadow-lg"
           >
-            Use Free Models Only
+            Start Using Osunhive
           </button>
-          
-          <div className="pt-8 border-t border-white/5">
-             <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-4">Official Support Channels</p>
-             <div className="grid grid-cols-2 gap-3">
-                <a href="https://t.me/Osunhive" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2.5 bg-gray-900 rounded-lg text-[10px] font-bold text-orange-400 hover:bg-gray-800 transition-all border border-white/5">
-                  <i className="fab fa-telegram"></i> Telegram
-                </a>
-                <a href="https://wa.me/2349076129380" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2.5 bg-gray-900 rounded-lg text-[10px] font-bold text-green-500 hover:bg-gray-800 transition-all border border-white/5">
-                  <i className="fab fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="https://youtube.com/@osunhiveofficial" target="_blank" rel="noreferrer" className="col-span-2 flex items-center justify-center gap-2 py-2.5 bg-gray-900 rounded-lg text-[10px] font-bold text-red-500 hover:bg-gray-800 transition-all border border-white/5">
-                  <i className="fab fa-youtube"></i> YouTube @osunhiveofficial
-                </a>
-             </div>
+
+          <button
+            onClick={openWebsite}
+            className="w-full py-4 bg-white/10 hover:bg-white/20 transition rounded-xl font-bold uppercase text-sm tracking-widest"
+          >
+            Visit Official Website
+          </button>
+
+        </div>
+
+        {/* Features */}
+        <div className="mt-10 text-left">
+
+          <h2 className="text-lg font-semibold mb-4 text-white">
+            What Osunhive Can Do
+          </h2>
+
+          <ul className="space-y-2 text-gray-400 text-sm list-disc list-inside">
+            <li>Create TikTok viral content ideas</li>
+            <li>Generate YouTube video scripts</li>
+            <li>Automate Facebook post creation</li>
+            <li>Build AI powered creative projects</li>
+            <li>Boost productivity for content creators</li>
+          </ul>
+
+        </div>
+
+        {/* Social Media */}
+        <div className="mt-10 border-t border-gray-800 pt-6">
+
+          <p className="text-xs text-gray-500 mb-4 uppercase tracking-widest">
+            Join The Community
+          </p>
+
+          <div className="grid grid-cols-2 gap-3">
+
+            <a
+              href="https://www.facebook.com/osunhive.name.ng"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-gray-800 hover:bg-gray-700 rounded-lg py-3 text-blue-400 font-bold text-sm text-center"
+            >
+              Facebook
+            </a>
+
+            <a
+              href="https://t.me/Osunhive"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-gray-800 hover:bg-gray-700 rounded-lg py-3 text-cyan-400 font-bold text-sm text-center"
+            >
+              Telegram
+            </a>
+
+            <a
+              href="https://youtube.com/@osunhiveofficial"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-gray-800 hover:bg-gray-700 rounded-lg py-3 text-red-500 font-bold text-sm text-center"
+            >
+              YouTube
+            </a>
+
+            <a
+              href="https://wa.me/2349076129380"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-gray-800 hover:bg-gray-700 rounded-lg py-3 text-green-500 font-bold text-sm text-center"
+            >
+              WhatsApp
+            </a>
+
           </div>
+
         </div>
-        
-        <div className="mt-10 pt-6">
-          <p className="text-[10px] text-gray-600 uppercase tracking-widest font-black">Developed by <span className="text-white">Olajide Sherif Oyinlola</span></p>
+
+        {/* Footer */}
+        <div className="mt-10 text-xs text-gray-600 uppercase tracking-widest">
+          Developed by <span className="text-white">Olajide Sherif Oyinlola</span>
         </div>
+
       </div>
+
     </div>
   );
 };
 
 export default KeySelection;
-          
