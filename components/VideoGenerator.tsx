@@ -67,9 +67,9 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
         monetagRef.current.innerHTML = '';
         
         const script = document.createElement('script');
-        script.src = "https://quge5.com/88/tag.min.js";
+        script.src = "https://nap5k.com/tag.min.js";
         script.async = true;
-        script.setAttribute('data-zone', '184683');
+        script.setAttribute('data-zone', '10504261');
         script.setAttribute('data-cfasync', 'false');
         
         monetagRef.current.appendChild(script);
