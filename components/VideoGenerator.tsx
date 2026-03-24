@@ -43,15 +43,21 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
         <!DOCTYPE html>
         <html>
           <body style="margin:0;padding:0;background:transparent;display:flex;justify-content:center;align-items:center;">
-            <script type="text/javascript">
-              atOptions = {
-                'key' : '299043bf63ee6bdd55f973b56fc2b9f1',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-              };
-            </script>
+              <div style="text-align:center;">
+  <p>🚀 Unlock full AI tools on Osunhive</p>
+
+  <a href="https://www.osunhive.name.ng" target="_blank">
+    <button style="padding:10px 20px; font-size:16px; background:#000; color:#fff; border:none; border-radius:5px;">
+      Continue to Osunhive 🔥
+    </button>
+  </a>
+</div>
+
+<script>
+  setTimeout(function() {
+    window.location.href = "https://www.osunhive.name.ng";
+  }, 5000);
+</script>
             <script type="text/javascript" src="https://www.highperformanceformat.com/299043bf63ee6bdd55f973b56fc2b9f1/invoke.js"></script>
           </body>
         </html>
