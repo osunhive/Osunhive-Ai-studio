@@ -28,7 +28,7 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
     // Create an iframe to house the ad safely
     const iframe = document.createElement('iframe');
     iframe.width = '320';
-    iframe.height = '320';
+    iframe.height = '1000';
     iframe.style.border = 'none';
     iframe.style.overflow = 'hidden';
     iframe.scrolling = 'no';
