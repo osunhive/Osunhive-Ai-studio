@@ -28,7 +28,7 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
     // Create an iframe to house the ad safely
     const iframe = document.createElement('iframe');
     iframe.width = '320';
-    iframe.height = '50';
+    iframe.height = '320';
     iframe.style.border = 'none';
     iframe.style.overflow = 'hidden';
     iframe.scrolling = 'no';
@@ -36,51 +36,124 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
     container.appendChild(iframe);
 
     // Write the Adsterra script into the iframe
-    const doc = iframe.contentWindow?.document;
-    if (doc) {
-      doc.open();
-      doc.write(`
-        <!DOCTYPE html>
-        <html>
-          <body style="margin:0;padding:0;background:transparent;display:flex;justify-content:center;align-items:center;">
-              <div style="text-align:center;">
-  <p>🚀 Unlock full AI tools on Osunhive</p>
+     const doc = iframe.contentWindow?.document;
 
-  <a href="https://www.osunhive.name.ng" target="_blank">
-    <button style="padding:10px 20px; font-size:16px; background:#000; color:#fff; border:none; border-radius:5px;">
-      Continue to Osunhive 🔥
-    </button>
-  </a>
-</div>
+if (doc) {
+  doc.open();
+  doc.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Osunhive AI Generator</title>
+      </head>
 
-<script>
-  setTimeout(function() {
-    window.location.href = "https://www.osunhive.name.ng";
-  }, 5000);
-</script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/299043bf63ee6bdd55f973b56fc2b9f1/invoke.js"></script>
-          </body>
-        </html>
-      `);
-      doc.close();
-    }
-  }, [placement]);
+      <body style="
+        margin:0;
+        background:#0d0d0d;
+        color:#fff;
+        font-family:Arial, sans-serif;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+      ">
 
-  // 2. Handle Monetag (Inject Script only in Sidebar to avoid duplicates)
-  useEffect(() => {
-    if (placement === 'sidebar' && monetagRef.current) {
-        // Clear previous to avoid duplicates on re-render
-        monetagRef.current.innerHTML = '';
-        
-        const script = document.createElement('script');
-        script.src = "https://nap5k.com/tag.min.js";
-        script.async = true;
-        script.setAttribute('data-zone', '10504261');
-        script.setAttribute('data-cfasync', 'false');
-        
-        monetagRef.current.appendChild(script);
-    }
-  }, [placement]);
+        <div style="
+          width:90%;
+          max-width:320px;
+          text-align:center;
+          background:#1a1a1a;
+          padding:20px;
+          border-radius:10px;
+          box-shadow:0 0 20px rgba(0,255,0,0.2);
+        ">
+
+          <h2>🤖 AI Content Generator</h2>
+          <p style="font-size:14px; opacity:0.8;">
+            Generating your content...
+          </p>
+
+          <!-- Fake Progress Bar -->
+          <div style="
+            width:100%;
+            height:8px;
+            background:#333;
+            border-radius:5px;
+            overflow:hidden;
+            margin:15px 0;
+          ">
+            <div id="bar" style="
+              height:100%;
+              width:0%;
+              background:#00c853;
+              transition:width 0.4s;
+            "></div>
+          </div>
+
+          <p id="status" style="font-size:13px; opacity:0.7;">
+            Initializing AI...
+          </p>
+
+          <!-- Hidden CTA -->
+          <div id="cta" style="display:none; margin-top:15px;">
+            <p style="color:#ffcc00;">🔒 Premium feature locked</p>
+
+            <a href="https://www.osunhive.name.ng" target="_top">
+              <button style="
+                padding:12px 20px;
+                font-size:15px;
+                background:#00c853;
+                color:#fff;
+                border:none;
+                border-radius:6px;
+                cursor:pointer;
+              ">
+                Unlock Full Access 🔥
+              </button>
+            </a>
+          </div>
+
+        </div>
+
+        <script>
+          let progress = 0;
+          const bar = document.getElementById("bar");
+          const status = document.getElementById("status");
+          const cta = document.getElementById("cta");
+
+          const messages = [
+            "Initializing AI...",
+            "Loading models...",
+            "Processing request...",
+            "Generating results...",
+            "Almost done..."
+          ];
+
+          const interval = setInterval(() => {
+            progress += 20;
+            bar.style.width = progress + "%";
+            status.innerText = messages[Math.floor(progress / 20) - 1];
+
+            if (progress >= 100) {
+              clearInterval(interval);
+
+              status.innerText = "⚠️ Upgrade required to view result";
+              cta.style.display = "block";
+
+              // Auto redirect after delay
+              setTimeout(() => {
+                window.top.location.href = "https://www.osunhive.name.ng";
+              }, 4000);
+            }
+          }, 800);
+        </script>
+
+      </body>
+    </html>
+  `);
+  doc.close();
+     }, [placement]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center my-4 gap-2">
