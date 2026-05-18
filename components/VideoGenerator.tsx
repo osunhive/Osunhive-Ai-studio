@@ -632,7 +632,7 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
              <div className="grid grid-cols-2 gap-2">
                 <a href="https://t.me/Osunhive" target="_blank" rel="noreferrer" className="py-2 bg-orange-600 hover:bg-orange-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-orange-500/10">Telegram</a>
                 <a href="https://wa.me/2349076129380" target="_blank" rel="noreferrer" className="py-2 bg-green-600 hover:bg-green-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-green-500/10">WhatsApp</a>
-                <a href="https://youtube.com/@osunhiveofficial" target="_blank" rel="noreferrer" className="py-2 bg-red-600 hover:bg-red-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-red-500/10 col-span-2">YouTube</a>
+                <a href="https://youtube.com/@osunhive_official" target="_blank" rel="noreferrer" className="py-2 bg-red-600 hover:bg-red-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-red-500/10 col-span-2">YouTube</a>
              </div>
           </div>
 
