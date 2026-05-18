@@ -12,170 +12,6 @@ const OsunhiveLogo = () => (
   </svg>
 );
 
-// --- Adsterra / Monetag Ad Component ---
-const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ placement }) => {
-  const adsterraRef = useRef<HTMLDivElement>(null);
-  const monetagRef = useRef<HTMLDivElement>(null);
-
-  // 1. Handle Adsterra Banner (Iframe Isolation to support document.write)
-  useEffect(() => {
-    const container = adsterraRef.current;
-    if (!container) return;
-
-    // Clean up previous ads
-    container.innerHTML = '';
-
-    // Create an iframe to house the ad safely
-    const iframe = document.createElement('iframe');
-    iframe.width = '320';
-    iframe.height = '1000';
-    iframe.style.border = 'none';
-    iframe.style.overflow = 'hidden';
-    iframe.scrolling = 'no';
-    
-    container.appendChild(iframe);
-
-    // Write the Adsterra script into the iframe
-     const doc = iframe.contentWindow?.document;
-
-if (doc) {
-  doc.open();
-  doc.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Osunhive AI Generator</title>
-      </head>
-
-      <body style="
-        margin:0;
-        background:#0d0d0d;
-        color:#fff;
-        font-family:Arial, sans-serif;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:100vh;
-      ">
-
-        <div style="
-          width:90%;
-          max-width:320px;
-          text-align:center;
-          background:#1a1a1a;
-          padding:20px;
-          border-radius:10px;
-          box-shadow:0 0 20px rgba(0,255,0,0.2);
-        ">
-
-          <h2>🤖 AI Content Generator</h2>
-          <p style="font-size:14px; opacity:0.8;">
-            Generating your content...
-          </p>
-
-          <!-- Fake Progress Bar -->
-          <div style="
-            width:100%;
-            height:8px;
-            background:#333;
-            border-radius:5px;
-            overflow:hidden;
-            margin:15px 0;
-          ">
-            <div id="bar" style="
-              height:100%;
-              width:0%;
-              background:#00c853;
-              transition:width 0.4s;
-            "></div>
-          </div>
-
-          <p id="status" style="font-size:13px; opacity:0.7;">
-            Initializing AI...
-          </p>
-
-          <!-- Hidden CTA -->
-          <div id="cta" style="display:none; margin-top:15px;">
-            <p style="color:#ffcc00;">🔒 Premium feature locked</p>
-
-            <a href="https://www.osunhive.name.ng" target="_top">
-              <button style="
-                padding:12px 20px;
-                font-size:15px;
-                background:#00c853;
-                color:#fff;
-                border:none;
-                border-radius:6px;
-                cursor:pointer;
-              ">
-                Unlock Full Access 🔥
-              </button>
-            </a>
-          </div>
-
-        </div>
-
-        <script>
-          let progress = 0;
-          const bar = document.getElementById("bar");
-          const status = document.getElementById("status");
-          const cta = document.getElementById("cta");
-
-          const messages = [
-            "Initializing AI...",
-            "Loading models...",
-            "Processing request...",
-            "Generating results...",
-            "Almost done..."
-          ];
-
-          const interval = setInterval(() => {
-            progress += 20;
-            bar.style.width = progress + "%";
-            status.innerText = messages[Math.floor(progress / 20) - 1];
-
-            if (progress >= 100) {
-              clearInterval(interval);
-
-              status.innerText = "⚠️ Upgrade required to view result";
-              cta.style.display = "block";
-
-              // Auto redirect after delay
-              setTimeout(() => {
-                window.top.location.href = "https://www.osunhive.name.ng";
-              }, 4000);
-            }
-          }, 800);
-        </script>
-
-      </body>
-    </html>
-  `);
-  doc.close();
-     }, [placement]);
-
-  return (
-    <div className="w-full flex flex-col items-center justify-center my-4 gap-2">
-      {/* Label */}
-      <div className="flex items-center gap-2 opacity-50">
-         <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Sponsored Advertisement</span>
-      </div>
-
-      {/* Adsterra Slot (Visible Banner 320x50) */}
-      <div 
-        ref={adsterraRef} 
-        className="w-[320px] h-[50px] bg-white/5 rounded border border-white/5 shadow-lg overflow-hidden flex items-center justify-center"
-      />
-
-      {/* Monetag Slot (Invisible/Multi-tag - Loaded only in Sidebar) */}
-      {placement === 'sidebar' && (
-        <div ref={monetagRef} className="hidden" /> 
-      )}
-    </div>
-  );
-};
-
 const DEFAULT_PROMPTS = {
   VIDEO: "How people can make money online in 2026. Futuristic digital visuals.",
   IMAGE: "A futuristic digital workspace in 2026, glowing holograms, neon lighting.",
@@ -617,7 +453,8 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
         <div className="flex p-1 bg-gray-900 rounded-xl mb-6 flex-wrap gap-1">
           {(['VIDEO', 'IMAGE', 'TEXT', 'CODE', 'SPEECH', 'LIVE'] as TaskMode[]).map(mode => (
             <button key={mode} onClick={() => setTaskMode(mode)}
-              className={`flex-1 min-w-[30%] py-2 text-[10px] font-bold rounded-lg transition-all ${taskMode === mode ? 'bg-orange-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}>
+              className={`flex-1 min-w-[30%] py-2 text-[10px] font-bold rounded-lg transition-all ${taskMode === mode ? 'bg-orange-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}
+            >
               {mode}
             </button>
           ))}
@@ -630,13 +467,11 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
                 <span className="text-[10px] font-black text-white uppercase tracking-widest">Connect With Us</span>
              </div>
              <div className="grid grid-cols-2 gap-2">
-                <a href="https://t.me/Osunhive" target="_blank" rel="noreferrer" className="py-2 bg-orange-600 hover:bg-orange-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-orange-500/10">Telegram</a>
-                <a href="https://wa.me/2349076129380" target="_blank" rel="noreferrer" className="py-2 bg-green-600 hover:bg-green-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-green-500/10">WhatsApp</a>
-                <a href="https://youtube.com/@osunhive_official" target="_blank" rel="noreferrer" className="py-2 bg-red-600 hover:bg-red-500 rounded-lg text-center text-[9px] font-black uppercase text-white transition-all shadow-xl shadow-red-500/10 col-span-2">YouTube</a>
+                <a href="https://t.me/Osunhive" target="_blank" rel="noreferrer" className="py-2 bg-orange-600 hover:bg-orange-500 rounded-lg text-center text-[9px] font-black uppercase text-white">Telegram</a>
+                <a href="https://wa.me/2349076129380" target="_blank" rel="noreferrer" className="py-2 bg-green-600 hover:bg-green-500 rounded-lg text-center text-[9px] font-black uppercase text-white">WhatsApp</a>
+                <a href="https://youtube.com/@osunhive_official" target="_blank" rel="noreferrer" className="py-2 bg-red-600 hover:bg-red-500 rounded-lg text-center text-[9px] font-black uppercase text-white">YouTube</a>
              </div>
           </div>
-
-          <AdSlot placement="sidebar" />
 
           <div className="space-y-4">
             <div>
@@ -666,14 +501,14 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
                   <div className="space-y-3 pt-2">
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <input value={speaker1.name} onChange={e => setSpeaker1({...speaker1, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-white" placeholder="S1 Name" />
-                        <select value={speaker1.voice} onChange={e => setSpeaker1({...speaker1, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
+                        <input value={speaker1.name} onChange={e => setSpeaker1({...speaker1, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px]" />
+                        <select value={speaker1.voice} onChange={e => setSpeaker1({...speaker1, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px]">
                           {VOICES.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}
                         </select>
                       </div>
                       <div className="space-y-1">
-                        <input value={speaker2.name} onChange={e => setSpeaker2({...speaker2, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-white" placeholder="S2 Name" />
-                        <select value={speaker2.voice} onChange={e => setSpeaker2({...speaker2, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px] text-gray-400">
+                        <input value={speaker2.name} onChange={e => setSpeaker2({...speaker2, name: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px]" />
+                        <select value={speaker2.voice} onChange={e => setSpeaker2({...speaker2, voice: e.target.value})} className="w-full bg-black border border-white/5 rounded p-2 text-[10px]">
                           {VOICES.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}
                         </select>
                       </div>
@@ -709,14 +544,14 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
              <div className="text-center">
                <img src={generatedImageUrl} className="rounded-3xl shadow-2xl border border-white/10 mx-auto max-h-[70vh]" alt="AI Gen" />
                <div className="mt-4 flex gap-4 justify-center">
-                  <a href={generatedImageUrl} download="osunhive-art.png" className="px-6 py-3 bg-white/10 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/20"><i className="fas fa-download"></i> Export Art</a>
+                  <a href={generatedImageUrl} download="osunhive-art.png" className="px-6 py-3 bg-white/10 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/20"><i className="fas fa-download"></i>Download</a>
                </div>
              </div>
            ) : textResult ? (
              <div className="w-full bg-gray-900/50 p-10 rounded-3xl border border-white/5 relative group">
                 <div className="absolute top-4 right-4 flex gap-2">
-                   <button onClick={copyToClipboard} className="px-3 py-1.5 bg-orange-600 rounded text-[10px] font-bold text-white hover:bg-orange-500"><i className={`fas ${isCopied ? 'fa-check' : 'fa-copy'}`}></i> {isCopied ? 'Copied' : 'Copy'}</button>
-                   {taskMode === 'CODE' && <button onClick={pushToGit} className="px-3 py-1.5 bg-blue-600 rounded text-[10px] font-bold text-white hover:bg-blue-500"><i className="fas fa-file-code"></i> Git Export</button>}
+                   <button onClick={copyToClipboard} className="px-3 py-1.5 bg-orange-600 rounded text-[10px] font-bold text-white hover:bg-orange-500"><i className={`fas ${isCopied ? 'fa-check' : 'fa-copy'}`}></i></button>
+                   {taskMode === 'CODE' && <button onClick={pushToGit} className="px-3 py-1.5 bg-blue-600 rounded text-[10px] font-bold text-white hover:bg-blue-500"><i className="fas fa-file-code"></i></button>}
                 </div>
                 <div className="font-mono text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">{textResult}</div>
              </div>
@@ -724,7 +559,7 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
              <div className="w-full max-w-md bg-gray-900 p-10 rounded-3xl text-center border border-white/5">
                 <div className="w-16 h-16 bg-orange-600/20 rounded-full flex items-center justify-center mx-auto mb-6"><i className="fas fa-waveform-lines text-orange-400 text-2xl"></i></div>
                 <audio src={audioUrl} controls className="w-full mb-6" autoPlay />
-                <a href={audioUrl} download="osunhive-speech.wav" className="w-full py-3 bg-orange-600 rounded-xl font-bold text-white block hover:bg-orange-500 transition-all uppercase tracking-widest text-xs">Download Studio Master</a>
+                <a href={audioUrl} download="osunhive-speech.wav" className="w-full py-3 bg-orange-600 rounded-xl font-bold text-white block hover:bg-orange-500 transition-all uppercase tracking-widest">Download Audio</a>
              </div>
            ) : (
              <div className="text-center opacity-20 flex flex-col items-center">
@@ -732,17 +567,10 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
                 <p className="text-2xl font-display uppercase tracking-widest font-black mt-4">Multimodal Engine Idle</p>
              </div>
            )}
-
-          {!status.isGenerating && (videoUrl || generatedImageUrl || textResult || audioUrl) && (
-            <div className="w-full mt-10">
-               <AdSlot placement="content" />
-            </div>
-          )}
         </div>
 
         <div className="mt-10 w-full max-w-4xl">
-           <AdSlot placement="bottom" />
-           <div className="flex items-center justify-between mt-4 text-[10px] text-gray-600 uppercase tracking-widest font-bold">
+           <div className="flex items-center justify-between text-[10px] text-gray-600 uppercase tracking-widest font-bold">
               <span>osunhive.name.ng Multimodal Studio</span>
               <span>© 2026 Olajide Sherif Oyinlola</span>
            </div>
