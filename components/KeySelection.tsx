@@ -104,7 +104,7 @@ const KeySelection: React.FC<Props> = ({ onSelected }) => {
             </a>
 
             <a
-              href="https://youtube.com/@osunhiveofficial"
+              href="https://youtube.com/@osunhive_official"
               target="_blank"
               rel="noreferrer"
               className="bg-gray-800 hover:bg-gray-700 rounded-lg py-3 text-red-500 font-bold text-sm text-center"
