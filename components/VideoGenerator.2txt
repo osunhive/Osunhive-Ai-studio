@@ -12,10 +12,9 @@ const OsunhiveLogo = () => (
   </svg>
 );
 
-// --- Combined Ad Component (Adsterra + Monetag) ---
+// --- Ad Component (Adsterra Only) ---
 const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ placement }) => {
   const adsterraRef = useRef<HTMLDivElement>(null);
-  const monetagRef = useRef<HTMLDivElement>(null);
 
   // 1. Handle Adsterra Banner (Iframe Isolation)
   useEffect(() => {
@@ -57,22 +56,6 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
     }
   }, [placement]);
 
-  // 2. Handle Monetag (Sidebar Only to prevent duplication)
-  useEffect(() => {
-    if (placement === 'sidebar' && monetagRef.current) {
-        // Clear previous to avoid duplicates on re-render
-        monetagRef.current.innerHTML = '';
-        
-        const script = document.createElement('script');
-        script.src = "https://quge5.com/88/tag.min.js";
-        script.async = true;
-        script.setAttribute('data-zone', '184683');
-        script.setAttribute('data-cfasync', 'false');
-        
-        monetagRef.current.appendChild(script);
-    }
-  }, [placement]);
-
   return (
     <div className="w-full flex flex-col items-center justify-center my-4 gap-2">
       <span className="text-[9px] text-gray-600 uppercase tracking-widest">Sponsored Ad</span>
@@ -82,11 +65,6 @@ const AdSlot: React.FC<{ placement: 'sidebar' | 'content' | 'bottom' }> = ({ pla
         ref={adsterraRef} 
         className="w-[320px] h-[50px] bg-white/5 rounded border border-white/5 shadow-lg overflow-hidden"
       />
-
-      {/* Monetag Slot (Invisible/Multi-tag - Loaded only in Sidebar) */}
-      {placement === 'sidebar' && (
-        <div ref={monetagRef} className="hidden" /> // Hidden container for the script to live in
-      )}
     </div>
   );
 };
@@ -520,7 +498,7 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
            <h2 className="text-xl font-bold font-display text-orange-500">osunhive.name.ng</h2>
         </div>
         
-        {/* === AD SLOT: SIDEBAR TOP (Adsterra Visible + Monetag Script) === */}
+        {/* === AD SLOT: SIDEBAR TOP (Adsterra Only) === */}
         <AdSlot placement="sidebar" />
 
         <div className="mb-6">
@@ -552,7 +530,7 @@ const VideoGenerator: React.FC<Props> = ({ onKeyError }) => {
           />
         </div>
 
-        {/* === AD SLOT: SIDEBAR BOTTOM (Adsterra Visible only) === */}
+        {/* === AD SLOT: SIDEBAR BOTTOM (Adsterra Only) === */}
         <div className="mt-auto">
              <AdSlot placement="sidebar" />
              <button
